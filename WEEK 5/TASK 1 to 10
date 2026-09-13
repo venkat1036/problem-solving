@@ -1,0 +1,562 @@
+week 5 
+task-1
+program:
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int currentSum = nums[0];
+        int maxSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;
+    }
+}
+ 
+input:
+nums = [-2,1,-3,4,-1,2,1,-5,4]
+
+output:
+6
+
+
+task-2
+program:
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'birthday' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY s
+     *  2. INTEGER d
+     *  3. INTEGER m
+     */
+
+    public static int birthday(List<Integer> s, int d, int m) {
+        int count = 0;
+
+        for (int i = 0; i <= s.size() - m; i++) {
+            int sum = 0;
+
+            for (int j = i; j < i + m; j++) {
+                sum += s.get(j);
+            }
+
+            if (sum == d) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader =
+            new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+            new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<Integer> s = Stream.of(
+                bufferedReader.readLine()
+                    .replaceAll("\\s+$", "")
+                    .split(" ")
+            )
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        String[] firstMultipleInput =
+            bufferedReader.readLine()
+                .replaceAll("\\s+$", "")
+                .split(" ");
+
+        int d = Integer.parseInt(firstMultipleInput[0]);
+        int m = Integer.parseInt(firstMultipleInput[1]);
+
+        int result = Result.birthday(s, d, m);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+input:
+5
+1 2 1 3 2
+3 2
+
+output:
+
+2
+
+
+task-3
+program:
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'maxSubarray' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts INTEGER_ARRAY arr as parameter.
+     */
+
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+
+        // Maximum Subarray Sum
+        int currentSum = arr.get(0);
+        int maxSubarray = arr.get(0);
+
+        for (int i = 1; i < arr.size(); i++) {
+            currentSum = Math.max(arr.get(i), currentSum + arr.get(i));
+            maxSubarray = Math.max(maxSubarray, currentSum);
+        }
+
+        // Maximum Subsequence Sum
+        int maxSubsequence = 0;
+        int largest = arr.get(0);
+
+        for (int num : arr) {
+
+            if (num > 0) {
+                maxSubsequence += num;
+            }
+
+            if (num > largest) {
+                largest = num;
+            }
+        }
+
+        // If all numbers are negative
+        if (maxSubsequence == 0) {
+            maxSubsequence = largest;
+        }
+
+        return Arrays.asList(maxSubarray, maxSubsequence);
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader =
+            new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+            new BufferedWriter(
+                new FileWriter(System.getenv("OUTPUT_PATH"))
+            );
+
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
+
+        IntStream.range(0, t).forEach(tItr -> {
+            try {
+                int n = Integer.parseInt(
+                    bufferedReader.readLine().trim()
+                );
+
+                List<Integer> arr = Stream.of(
+                    bufferedReader.readLine()
+                        .replaceAll("\\s+$", "")
+                        .split(" ")
+                )
+                .map(Integer::parseInt)
+                .collect(toList());
+
+                List<Integer> result = Result.maxSubarray(arr);
+
+                bufferedWriter.write(
+                    result.stream()
+                        .map(Object::toString)
+                        .collect(joining(" "))
+                    + "\n"
+                );
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+
+input:
+10 10
+10 11
+
+output:
+-1 -1
+
+
+task-4
+program:
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+
+        int total = 0;
+
+        int currentMax = 0;
+        int maxSum = nums[0];
+
+        int currentMin = 0;
+        int minSum = nums[0];
+
+        for (int num : nums) {
+
+            // Maximum subarray (Kadane)
+            currentMax = Math.max(num, currentMax + num);
+            maxSum = Math.max(maxSum, currentMax);
+
+            // Minimum subarray
+            currentMin = Math.min(num, currentMin + num);
+            minSum = Math.min(minSum, currentMin);
+
+            total += num;
+        }
+
+        // All elements are negative
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        // Maximum circular subarray
+        int circularSum = total - minSum;
+
+        return Math.max(maxSum, circularSum);
+    }
+}
+
+Input:
+[1,-2,3,-2]
+
+Output:
+3
+
+task-5
+program:
+class Solution {
+    public int myAtoi(String s) {
+
+        int i = 0;
+        int n = s.length();
+
+        // 1. Ignore leading spaces
+        while (i < n && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        // 2. Check sign
+        int sign = 1;
+
+        if (i < n && s.charAt(i) == '-') {
+            sign = -1;
+            i++;
+        } else if (i < n && s.charAt(i) == '+') {
+            i++;
+        }
+
+        // 3. Convert digits
+        int result = 0;
+
+        while (i < n && Character.isDigit(s.charAt(i))) {
+
+            int digit = s.charAt(i) - '0';
+
+            // 4. Check overflow before multiplying
+
+
+            if (result > (Integer.MAX_VALUE - digit) / 10) {
+                if (sign == 1) {
+                    return Integer.MAX_VALUE;
+                } else {
+                    return Integer.MIN_VALUE;
+                }
+            }
+
+            result = result * 10 + digit;
+            i++;
+        }
+
+        return result * sign;
+    }
+}
+
+
+Input:  "42"
+Output: 42
+
+task-6
+program:
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'alternatingCharacters' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts STRING s as parameter.
+     */
+
+    public static int alternatingCharacters(String s) {
+        int deletions = 0;
+
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                deletions++;
+            }
+        }
+
+        return deletions;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader =
+            new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+            new BufferedWriter(
+                new FileWriter(System.getenv("OUTPUT_PATH"))
+            );
+
+        int q = Integer.parseInt(
+            bufferedReader.readLine().trim()
+        );
+
+        IntStream.range(0, q).forEach(qItr -> {
+            try {
+                String s = bufferedReader.readLine();
+
+                int result = Result.alternatingCharacters(s);
+
+                bufferedWriter.write(String.valueOf(result));
+                bufferedWriter.newLine();
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+input:
+5
+AAAA
+BBBBB
+ABABABAB
+BABABA
+AAABBB
+
+
+output:
+3
+4
+0
+0
+4
+
+
+task-7
+program:
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashSet<Character> set = new HashSet<>();
+
+        int left = 0;
+        int maxLength = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+
+            set.add(s.charAt(right));
+
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
+}
+
+Input:  abcabcbb
+Output: 3
+
+
+task-8
+program:
+class Solution {
+    public List<String> findAndReplacePattern(String[] words, String pattern) {
+        List<String> result = new ArrayList<>();
+
+        for (String word : words) {
+            if (matches(word, pattern)) {
+                result.add(word);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean matches(String word, String pattern) {
+        HashMap<Character, Character> map1 = new HashMap<>();
+        HashMap<Character, Character> map2 = new HashMap<>();
+
+        for (int i = 0; i < pattern.length(); i++) {
+            char p = pattern.charAt(i);
+            char w = word.charAt(i);
+
+            if (map1.containsKey(p) && map1.get(p) != w) {
+                return false;
+            }
+
+            if (map2.containsKey(w) && map2.get(w) != p) {
+                return false;
+            }
+
+            map1.put(p, w);
+            map2.put(w, p);
+        }
+
+        return true;
+    }
+}
+
+input:
+words = ["abc","deq","mee","aqq","dkd","ccc"]
+pattern = "abb"
+
+output:
+["mee","aqq"]
+
+task-9
+program:
+class Solution {
+    public List<String> stringMatching(String[] words) {
+        List<String> result = new ArrayList<>();
+
+        for (int i = 0; i < words.length; i++) {
+            for (int j = 0; j < words.length; j++) {
+                if (i != j && words[j].contains(words[i])) {
+                    result.add(words[i]);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+input:
+words = ["mass","as","hero","superhero"]
+
+output:
+["as","hero"]
+
+task-10
+program:
+import java.util.ArrayList;
+
+public class GFG {
+
+    // Function to search for all occurrences of 'pat' in 'txt' using Naive Approach
+    static ArrayList<Integer> search(String pat, String txt)
+    {
+        // Length of the pattern
+        int m = pat.length();
+
+        // Length of the text
+        int n = txt.length();
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        // Slide the pattern over text one by one
+        for (int i = 0; i <= n - m; i++)
+        {
+            int j;
+
+            // Check for pattern match at index i
+            for (j = 0; j < m; j++)
+            {
+                if (txt.charAt(i + j) != pat.charAt(j))
+                    break;
+            }
+
+            // If pattern matches, store index
+            if (j == m)
+                ans.add(i);
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args)
+    {
+        String txt = "aabaacaadaabaaba";
+        String pat = "aaba";
+
+        ArrayList<Integer> res = search(pat, txt);
+
+        for (int it : res)
+        {
+            System.out.print(it + " ");
+        }
+    }
+}
+
+
+input:
+
+
+output:
+0 9 12
