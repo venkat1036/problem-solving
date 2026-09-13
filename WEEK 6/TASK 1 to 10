@@ -1,0 +1,468 @@
+week 7 
+task 1
+program:
+class ParkingSystem {
+    int big;
+    int medium;
+    int small;
+    public ParkingSystem(int big, int medium, int small) {
+        this.big=big;
+        this.medium=medium;
+        this.small=small;
+    }
+    
+    public boolean addCar(int carType) {
+        if(carType==1){
+            if(big>0){
+                big--;
+                return true;
+            }
+        }
+        else if(carType==2){
+            if(medium>0){
+                medium--;
+                return true;
+            }
+        }
+        else if(carType==3){
+            if(small>0){
+                  small--;
+                  return true;
+            }
+        }
+        return false;
+    }
+}
+
+Input
+["ParkingSystem", "addCar", "addCar", "addCar", "addCar"]
+[[1, 1, 0], [1], [2], [3], [1]]
+Output
+[null, true, true, false, false]import java.util.HashMap;
+
+task 2
+program:
+import java.util.Map;
+
+class UndergroundSystem {
+
+    private static class CheckInRecord {
+        String stationName;
+        int time;
+
+        public CheckInRecord(String stationName, int time) {
+            this.stationName = stationName;
+            this.time = time;
+        }
+    }
+
+    private static class RouteData {
+        long totalTime = 0;
+        int totalTrips = 0;
+    }
+
+    private Map<Integer, CheckInRecord> checkInMap;
+    private Map<String, RouteData> routeMap;
+
+    public UndergroundSystem() {
+        checkInMap = new HashMap<>();
+        routeMap = new HashMap<>();
+    }
+    
+    public void checkIn(int id, String stationName, int t) {
+        checkInMap.put(id, new CheckInRecord(stationName, t));
+    }
+    
+    public void checkOut(int id, String stationName, int t) {
+        CheckInRecord record = checkInMap.remove(id);
+        if (record != null) {
+            String routeKey = record.stationName + "->" + stationName;
+            int travelTime = t - record.time;
+            
+            RouteData data = routeMap.computeIfAbsent(routeKey, k -> new RouteData());
+            data.totalTime += travelTime;
+            data.totalTrips += 1;
+        }
+    }
+    
+    public double getAverageTime(String startStation, String endStation) {
+        String routeKey = startStation + "->" + endStation;
+        RouteData data = routeMap.get(routeKey);
+        if (data == null || data.totalTrips == 0) {
+            return 0.0;
+        }
+        return (double) data.totalTime / data.totalTrips;
+    }
+}
+Input
+["UndergroundSystem","checkIn","checkIn","checkIn","checkOut","checkOut","checkOut","getAverageTime","getAverageTime","checkIn","getAverageTime","checkOut","getAverageTime"]
+[[],[45,"Leyton",3],[32,"Paradise",8],[27,"Leyton",10],[45,"Waterloo",15],[27,"Waterloo",20],[32,"Cambridge",22],["Paradise","Cambridge"],["Leyton","Waterloo"],[10,"Leyton",24],["Leyton","Waterloo"],[10,"Waterloo",38],["Leyton","Waterloo"]]
+
+Output
+[null,null,null,null,null,null,null,14.00000,11.00000,null,11.00000,null,12.00000]
+
+task 3
+program:
+class MyHashSet {
+
+    private boolean[] set;
+
+    public MyHashSet() {
+        set = new boolean[1000001];
+    }
+
+    public void add(int key) {
+        set[key] = true;
+    }
+
+    public void remove(int key) {
+        set[key] = false;
+    }
+
+    public boolean contains(int key) {
+        return set[key];
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        MyHashSet obj = new MyHashSet();
+
+        // Add elements
+        obj.add(10);
+        obj.add(20);
+        obj.add(30);
+
+        // Check elements
+        System.out.println(obj.contains(10)); // true
+        System.out.println(obj.contains(15)); // false
+        System.out.println(obj.contains(20)); // true
+
+        // Remove element
+        obj.remove(20);
+
+        // Check again
+        System.out.println(obj.contains(20)); // false
+        System.out.println(obj.contains(30)); // true
+    }
+}
+OUTPUT:
+true
+false
+true
+false
+true
+
+task 4
+program:
+import java.util.*;
+
+class Student {
+}
+
+class Rockstar {
+}
+
+class Hacker {
+}
+
+public class Solution {
+
+    static String count(ArrayList mylist) {
+        int student = 0;
+        int rockstar = 0;
+        int hacker = 0;
+
+        for (Object obj : mylist) {
+
+            if (obj instanceof Student) {
+                student++;
+            }
+
+            if (obj instanceof Rockstar) {
+                rockstar++;
+            }
+
+            if (obj instanceof Hacker) {
+                hacker++;
+            }
+        }
+
+        return student + " " + rockstar + " " + hacker;
+    }
+
+
+
+task 5
+program:
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList mylist = new ArrayList();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+
+            if (type.equals("Student")) {
+                mylist.add(new Student());
+            } 
+            else if (type.equals("Rockstar")) {
+                mylist.add(new Rockstar());
+            } 
+            else if (type.equals("Hacker")) {
+                mylist.add(new Hacker());
+            }
+        }
+
+        System.out.println(count(mylist));
+    }
+}
+
+
+output:
+5
+Student
+Student
+Rockstar
+Student
+
+task 6
+program:
+Hackerclass Animal {
+    void walk() {
+        System.out.println("I am walking");
+    }
+}
+
+class Bird extends Animal {
+    void fly() {
+        System.out.println("I am flying");
+    }
+
+    void sing() {
+        System.out.println("I am singing");
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Bird bird = new Bird();
+
+        bird.walk();
+        bird.fly();
+        bird.sing();
+    }
+}
+I am walking
+I am flying
+I am singingclass Arithmetic {
+
+    int add(int a, int b) {
+        return a + b;
+    }
+}
+
+class Adder extends Arithmetic {
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Adder adder = new Adder();
+
+        System.out.println("My superclass is: " 
+                           + adder.getClass().getSuperclass().getName());
+
+        System.out.println(adder.add(42, 13));
+        System.out.println(adder.add(10, 10));
+        System.out.println(adder.add(5, 15));
+    }
+}
+
+output:
+My superclass is: Arithmetic
+55
+20
+20
+
+
+task 7
+program:
+import java.util.*;
+
+public class Solution {
+
+    public static <T> void printArray(T[] array) {
+        for (T element : array) {
+            System.out.println(element);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Integer[] intArray = {1, 2, 3};
+        String[] stringArray = {"Hello", "World"};
+
+        printArray(intArray);
+        printArray(stringArray);
+    }
+}
+
+output:
+1
+2
+3
+Hello
+World
+
+task 8
+program:
+import java.util.*;
+
+class ThroneInheritance {
+
+    private String king;
+    private Map<String, List<String>> family;
+    private Set<String> dead;
+
+    public ThroneInheritance(String kingName) {
+        king = kingName;
+        family = new HashMap<>();
+        dead = new HashSet<>();
+    }
+
+    public void birth(String parentName, String childName) {
+        family.computeIfAbsent(parentName, k -> new ArrayList<>())
+              .add(childName);
+    }
+
+    public void death(String name) {
+        dead.add(name);
+    }
+
+    public List<String> getInheritanceOrder() {
+        List<String> result = new ArrayList<>();
+
+        dfs(king, result);
+
+        return result;
+    }
+
+    private void dfs(String person, List<String> result) {
+
+        // Add person if alive
+        if (!dead.contains(person)) {
+            result.add(person);
+        }
+
+        // Visit children in birth order
+        if (family.containsKey(person)) {
+            for (String child : family.get(person)) {
+                dfs(child, result);
+            }
+        }
+    }
+}
+output:
+[king, andy, matthew, bob, alex, asha, catherine]
+[king, andy, matthew, alex, asha, catherine]
+
+
+task 9
+program:
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static List<Integer> gradingStudents(List<Integer> grades) {
+        List<Integer> result = new ArrayList<>();
+
+        for (int grade : grades) {
+
+            if (grade < 38) {
+                result.add(grade);
+            } else {
+                int nextMultiple = ((grade / 5) + 1) * 5;
+
+                if (nextMultiple - grade < 3) {
+                    result.add(nextMultiple);
+                } else {
+                    result.add(grade);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        List<Integer> grades = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            grades.add(sc.nextInt());
+        }
+
+        List<Integer> result = gradingStudents(grades);
+
+        for (int grade : result) {
+            System.out.println(grade);
+        }
+    }
+}
+
+output:
+75
+67
+40
+33
+
+task 10
+program:
+import java.util.*;
+
+class BrowserHistory {
+
+    ArrayList<String> history;
+    int current;
+
+    public BrowserHistory(String homepage) {
+        history = new ArrayList<>();
+        history.add(homepage);
+        current = 0;
+    }
+
+    public void visit(String url) {
+
+        // Remove forward history
+        while (history.size() > current + 1) {
+            history.remove(history.size() - 1);
+        }
+
+        history.add(url);
+        current++;
+    }
+
+    public String back(int steps) {
+        current = Math.max(0, current - steps);
+        return history.get(current);
+    }
+
+    public String forward(int steps) {
+        current = Math.min(history.size() - 1, current + steps);
+        return history.get(current);
+    }
+}
+ 
+output:
+[null,null,null,null,"facebook.com","google.com","facebook.com",null,"linkedin.com","google.com","leetcode.com"]
