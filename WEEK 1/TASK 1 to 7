@@ -1,0 +1,215 @@
+week 1 
+task 2
+program:
+public class Main {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        int index = 2;
+
+        System.out.println("Element at index " + index + " is: " + numbers[index]);
+    }
+}
+
+output:
+Element at index 2 is: 30
+
+task 3
+program:
+public class Main {
+    public static void main(String[] args) {
+
+        int[] arr = {10, 20, 30, 40, 50};
+        int key = 30;
+
+        int low = 0, high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] == key) {
+                System.out.println("Element found at index: " + mid);
+                return;
+            } 
+            else if (arr[mid] < key) {
+                low = mid + 1;
+            } 
+            else {
+                high = mid - 1;
+            }
+        }
+
+        System.out.println("Element not found");
+    }
+}
+
+output:
+Element found at index: 2
+
+task 4
+program:
+import java.util.Scanner;
+
+public class MaximumElement {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        int max = arr[0];
+
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        System.out.println("Maximum element = " + max);
+
+        sc.close();
+    }
+}
+
+
+
+
+
+OUTPUT :
+Enter the number of elements: 5
+Enter the array elements:
+13
+56
+8
+59
+34
+Maximum element = 59
+
+
+
+task 5
+program:
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class KthSmallest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter the value of k: ");
+        int k = sc.nextInt();
+
+        Arrays.sort(arr);
+
+        if (k > 0 && k <= n) {
+            System.out.println("The " + k + "th smallest element is: " + arr[k - 1]);
+        } else {
+            System.out.println("Invalid value of k");
+        }
+
+        sc.close();
+    }
+}
+
+
+output :
+Enter the number of elements: 4
+Enter the array elements:
+24
+67
+35
+25
+Enter the value of k: 3
+The 3th smallest element is: 35
+
+
+
+
+task 6
+program:
+import java.util.Scanner;
+
+public class ArrayPairs {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println("Possible pairs are:");
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                System.out.println("(" + arr[i] + ", " + arr[j] + ")");
+            }
+        }
+
+        sc.close();
+    }
+}
+
+
+output :
+Enter the number of elements: 3
+Enter the array elements:
+2
+3
+4
+Possible pairs are:
+(2, 3)
+(2, 4)
+(3, 4)
+
+
+
+task 7
+program:
+import java.util.Scanner;
+
+public class PositiveNegativeZero {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+
+        if (num > 0) {
+            System.out.println("Positive");
+        } else if (num < 0) {
+            System.out.println("Negative");
+        } else {
+            System.out.println("Zero");
+        }
+
+        sc.close();
+    }
+}
+
+
+output:
+Enter a number: 15
+Positive
